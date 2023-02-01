@@ -1,54 +1,63 @@
 #include <stdio.h>
-int top = -1, stack[100];
-main()
+int stack[20];
+int top = -1;
+
+void push(int x)
 {
-    char a[50], ch;
-    int i, op1, op2, res, x;
-    void push(int);
-    int pop();
-    int eval(char, int, int);
-    printf("enter a postfix expression:");
-    gets(a);
-    for (i = 0; a[i] != '\0'; i++)
-    {
-        ch = a[i];
-        if (ch >= '0' && ch <= '9')
-            push('0');
-        else
-        {
-            op2 = pop();
-            op1 = pop();
-            res = eval(ch, op1, op2);
-            push(res);
-        }
-    }
-    x = pop();
-    printf("evaluated value = %d", x);
-    getch();
+    stack[++top] = x;
 }
-void push(int n)
-{
-    top++;
-    stack[top] = n;
-}
+
 int pop()
 {
-    int res;
-    res = stack[top];
-    top--;
-    return res;
+    return stack[top--];
 }
-int eval(char ch, int op1, int op2)
+
+int main()
 {
-    switch (ch)
+    char exp[20];
+    char *e;
+    int n1, n2, n3, num;
+    printf("Enter the expression :: ");
+    scanf("%s", exp);
+    e = exp;
+    while (*e != '\0')
     {
-    case '+':
-        return (op1 + op2);
-    case '-':
-        return (op1 - op2);
-    case '*':
-        return (op1 * op2);
-    case '/':
-        return (op1 / op2);
+        if (isdigit(*e))
+        {
+            num = *e - 48;
+            push(num);
+        }
+        else
+        {
+            n1 = pop();
+            n2 = pop();
+            switch (*e)
+            {
+            case '+':
+            {
+                n3 = n1 + n2;
+                break;
+            }
+            case '-':
+            {
+                n3 = n2 - n1;
+                break;
+            }
+            case '*':
+            {
+                n3 = n1 * n2;
+                break;
+            }
+            case '/':
+            {
+                n3 = n2 / n1;
+                break;
+            }
+            }
+            push(n3);
+        }
+        e++;
     }
+    printf("\nThe result of expression %s  =  %d\n\n", exp, pop());
+    return 0;
 }
