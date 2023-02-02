@@ -5,6 +5,12 @@ void swap(int *a, int *b)
     *a = *b;
     *b = temp;
 }
+void printArray(int arr[], int N)
+{
+    for (int i = 0; i < N; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
 void heapify(int arr[], int N, int i)
 {
     int largest = i;
@@ -34,16 +40,17 @@ void heapSort(int arr[], int N)
         heapify(arr, i, 0);
     }
 }
-void printArray(int arr[], int N)
-{
-    for (int i = 0; i < N; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-}
 int main()
 {
-    int arr[] = {34, 56, 27, 8, 85, 12};
-    int N = sizeof(arr) / sizeof(arr[0]);
+    // int arr[] = {34, 56, 27, 8, 85, 12};
+    // int N = sizeof(arr) / sizeof(arr[0]);
+    int arr[20], N;
+    scanf("%d", &N);
+    for (int i = 0; i < N; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
     heapSort(arr, N);
     printf("Sorted array is\n");
     printArray(arr, N);
